@@ -2,6 +2,7 @@
 
 namespace App\Nova\ZLink\Common;
 
+use App\Nova\HiddenResource;
 use App\Nova\Resource;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Folder extends Resource
+class Folder extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

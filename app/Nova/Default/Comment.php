@@ -3,6 +3,7 @@
 namespace App\Nova\Default;
 
 use App\Models\Default\Comment as ModelsComment;
+use App\Nova\HiddenResource;
 use App\Nova\Resource;
 use App\Zaions\Helpers\ZHelpers;
 use Laravel\Nova\Fields\BelongsTo;
@@ -15,7 +16,7 @@ use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Comment extends Resource
+class Comment extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

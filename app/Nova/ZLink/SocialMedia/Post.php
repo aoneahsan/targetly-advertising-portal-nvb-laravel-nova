@@ -2,12 +2,13 @@
 
 namespace App\Nova\ZLink\SocialMedia;
 
+use App\Nova\HiddenResource;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Post extends Resource
+class Post extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

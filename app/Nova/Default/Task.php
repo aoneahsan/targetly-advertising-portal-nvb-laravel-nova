@@ -8,6 +8,7 @@ use App\Nova\Actions\TaskActions\ReviewTaskAction;
 use App\Nova\Filters\TaskFilters\TaskStatusFilter;
 use App\Nova\Filters\TaskFilters\TaskTypeFilter;
 use App\Nova\Filters\TaskFilters\TaskVerificationStatusFilter;
+use App\Nova\HiddenResource;
 use App\Nova\Lenses\TaskLens\PendingTaskLens;
 use App\Nova\Metrics\PartitionMetrics\TasksPerStatusPartitionMetrics;
 use App\Nova\Metrics\TrendMetrics\TasksPerWeekTrendMetrics;
@@ -39,7 +40,7 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Task extends Resource
+class Task extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

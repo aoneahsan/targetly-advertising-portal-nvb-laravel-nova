@@ -4,6 +4,7 @@ namespace App\Nova\Default;
 
 use AlexAzartsev\Heroicon\Heroicon;
 use App\Models\Default\ZStatus as ModelsZStatus;
+use App\Nova\HiddenResource;
 use App\Nova\Resource;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ZStatus extends Resource
+class ZStatus extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

@@ -3,6 +3,7 @@
 namespace App\Nova\Default;
 
 use App\Models\Default\Reply as ModelsReply;
+use App\Nova\HiddenResource;
 use App\Nova\Resource;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Reply extends Resource
+class Reply extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

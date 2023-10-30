@@ -3,6 +3,7 @@
 namespace App\Nova\Default;
 
 use App\Models\Default\History as ModelsHistory;
+use App\Nova\HiddenResource;
 use App\Nova\Resource;
 use App\Zaions\Enums\HistoryTypeEnum;
 use App\Zaions\Helpers\ZHelpers;
@@ -20,7 +21,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class History extends Resource
+class History extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

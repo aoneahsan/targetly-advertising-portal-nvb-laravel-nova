@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Zaions\Enums\PermissionsEnum;
+use App\Zaions\Helpers\ZHelpers;
 // use Bakerkretzmar\NovaSettingsTool\SettingsTool;
 // use CodencoDev\NovaGridSystem\NovaGridSystem;
 // use Dniccum\NovaDocumentation\NovaDocumentation;
@@ -11,6 +12,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 // use Oneduo\NovaFileManager\NovaFileManager;
 use Vyuldashev\NovaPermission\NovaPermissionTool;
@@ -106,56 +108,72 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [
-            NovaPermissionTool::make(),
+        // $user = Auth::user();
+        // $isSuperAdmin = ZHelpers::isSuperAdmin($user);
 
-            // https://novapackages.com/packages/vmitchell85/nova-links
-            // (new \vmitchell85\NovaLinks\Links('Extra Links'))
-            //     ->addExternalLink('Zaions', 'https://zaions.com', true),
+        $tools = [];
 
-            // https://novapackages.com/packages/bolechen/nova-activitylog
-            // new \Bolechen\NovaActivitylog\NovaActivitylog(),
+        // Commented Tools
+        // [
+        //     // https://novapackages.com/packages/vmitchell85/nova-links
+        //     // (new \vmitchell85\NovaLinks\Links('Extra Links'))
+        //     //     ->addExternalLink('Zaions', 'https://zaions.com', true),
 
-            // https://novapackages.com/packages/bakerkretzmar/nova-settings-tool
-            // new SettingsTool,
+        //     // https://novapackages.com/packages/bolechen/nova-activitylog
+        //     // new \Bolechen\NovaActivitylog\NovaActivitylog(),
 
-            // https://novapackages.com/packages/codenco-dev/nova-grid-system#screenshots
-            // new NovaGridSystem,
+        //     // https://novapackages.com/packages/bakerkretzmar/nova-settings-tool
+        //     // new SettingsTool,
 
-            // https://novapackages.com/packages/outl1ne/nova-menu-builder
-            // mainly to create menus in laravel nova and then get them in frontend using API
-            // \Outl1ne\MenuBuilder\MenuBuilder::make()
-            //     // Optional customization
-            //     ->title('Menus') // Define a new name for sidebar
-            //     ->icon('adjustments') // Customize menu icon, supports heroicons
-            //     ->hideMenu(false), // Hide MenuBuilder defined MenuSection.
+        //     // https://novapackages.com/packages/codenco-dev/nova-grid-system#screenshots
+        //     // new NovaGridSystem,
 
-            // https://novapackages.com/packages/Visanduma/nova-two-factor
-            new \Visanduma\NovaTwoFactor\NovaTwoFactor(),
+        //     // https://novapackages.com/packages/outl1ne/nova-menu-builder
+        //     // mainly to create menus in laravel nova and then get them in frontend using API
+        //     // \Outl1ne\MenuBuilder\MenuBuilder::make()
+        //     //     // Optional customization
+        //     //     ->title('Menus') // Define a new name for sidebar
+        //     //     ->icon('adjustments') // Customize menu icon, supports heroicons
+        //     //     ->hideMenu(false), // Hide MenuBuilder defined MenuSection.
 
-            // https://novapackages.com/packages/oneduo/nova-file-manager
-            // NovaFileManager::make(),
+        //     // https://novapackages.com/packages/oneduo/nova-file-manager
+        //     // NovaFileManager::make(),
 
-            // https://novapackages.com/packages/spatie/nova-backup-tool
-            // Getting error: Undefined constant \"Spatie\\Backup\\Tasks\\Backup\\SIGINT\"
-            // Solution: https://github.com/spatie/laravel-backup/issues/1445
-            // new \Spatie\BackupTool\BackupTool(),
+        //     // https://novapackages.com/packages/spatie/nova-backup-tool
+        //     // Getting error: Undefined constant \"Spatie\\Backup\\Tasks\\Backup\\SIGINT\"
+        //     // Solution: https://github.com/spatie/laravel-backup/issues/1445
+        //     // new \Spatie\BackupTool\BackupTool(),
 
-            // https://novapackages.com/packages/whitecube/nova-page
-            // \Whitecube\NovaPage\NovaPageTool::make(),
-
-
-            // https://novapackages.com/packages/dniccum/nova-documentation
-            // new NovaDocumentation,
-
-            // https://novapackages.com/packages/stepanenko3/nova-health
-            // new \Stepanenko3\NovaHealth\NovaHealth,
-
-            // https://novapackages.com/packages/llaski/nova-scheduled-jobs
-            // new \Llaski\NovaScheduledJobs\NovaScheduledJobsCard,
+        //     // https://novapackages.com/packages/whitecube/nova-page
+        //     // \Whitecube\NovaPage\NovaPageTool::make(),
 
 
-        ];
+        //     // https://novapackages.com/packages/dniccum/nova-documentation
+        //     // new NovaDocumentation,
+
+        //     // https://novapackages.com/packages/stepanenko3/nova-health
+        //     // new \Stepanenko3\NovaHealth\NovaHealth,
+
+        //     // https://novapackages.com/packages/llaski/nova-scheduled-jobs
+        //     // new \Llaski\NovaScheduledJobs\NovaScheduledJobsCard,
+
+
+        // ];
+
+        // if ($isSuperAdmin) {
+        //     array_push(
+        //         $tools,
+        //         ...[
+        // NovaPermissionTool::make()->canSee(function (Request $request) {
+        //     return ZHelpers::isNRUserSuperAdmin($request);
+        // }),
+        // https://novapackages.com/packages/Visanduma/nova-two-factor
+        //             new \Visanduma\NovaTwoFactor\NovaTwoFactor()
+        //         ]
+        //     );
+        // }
+
+        return $tools;
     }
 
     /**

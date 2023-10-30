@@ -6,6 +6,7 @@ use AlexAzartsev\Heroicon\Heroicon;
 use App\Models\Default\ZTestingDemo as ModelsZTestingDemo;
 use App\Nova\Actions\ZTestingDemoActions\ZTestActionZaionsLink;
 use App\Nova\Filters\ZTestingDemoFilters\CustomInputFilter;
+use App\Nova\HiddenResource;
 use App\Nova\Resource;
 use App\Zaions\Helpers\ZHelpers;
 use Degecko\NovaFiltersSummary\FiltersSummary;
@@ -41,7 +42,7 @@ use Stepanenko3\NovaCards\Cards\WorldClockCard;
 use Stepanenko3\NovaCards\Cards\CalendarCard;
 use Stepanenko3\NovaCards\Cards\GreeterCard;
 
-class ZTestingDemo extends Resource
+class ZTestingDemo extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

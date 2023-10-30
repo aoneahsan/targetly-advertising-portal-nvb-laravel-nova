@@ -3,6 +3,7 @@
 namespace App\Nova\Default;
 
 use App\Models\Default\Attachment as ModelsAttachment;
+use App\Nova\HiddenResource;
 use App\Nova\Resource;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attachment extends Resource
+class Attachment extends HiddenResource
 {
     /**
      * The model the resource corresponds to.

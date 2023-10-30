@@ -2,7 +2,7 @@
 
 namespace App\Nova\Default;
 
-use App\Nova\Resource;
+use App\Nova\HiddenResource;
 use App\Nova\ZLink\Analytics\Pixel;
 use App\Nova\ZLink\Analytics\UtmTag;
 use App\Zaions\Enums\RolesEnum;
@@ -20,7 +20,7 @@ use Laravel\Nova\Fields\Timezone;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Spatie\Permission\Models\Role;
 
-class WorkSpace extends Resource
+class WorkSpace extends HiddenResource
 {
     /**
      * The model the resource corresponds to.
@@ -45,6 +45,8 @@ class WorkSpace extends Resource
         'id',
         'title'
     ];
+
+
 
     /**
      * Get the fields displayed by the resource.

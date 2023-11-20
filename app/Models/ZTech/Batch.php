@@ -5,6 +5,7 @@ namespace App\Models\ZTech;
 use App\Models\Default\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,10 +24,10 @@ class Batch extends Model
     ];
 
     // Relationship methods
-    public function students(): HasManyThrough
+    public function students(): BelongsToMany
     {
         // return $this->hasManyThrough(User::class, Student::class, 'batchId', 'id', 'id', 'userId');
-        return $this->hasManyThrough(User::class, Student::class, 'batchId', 'userId', 'id', 'id');
+        return $this->belongsToMany(User::class, Student::class, 'batchId', 'userId', 'id', 'id');
     }
 }
 

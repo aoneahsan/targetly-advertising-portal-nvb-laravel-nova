@@ -105,8 +105,8 @@ class User extends Authenticatable
     }
 
     // If user is a student then it will belong to a batch
-    public function batch(): HasManyThrough
+    public function batch(): BelongsToMany
     {
-        return $this->hasManyThrough(Batch::class, Student::class, 'userId', 'batchId', 'id', 'id');
+        return $this->belongsToMany(Batch::class, Student::class, 'userId', 'batchId', 'id', 'id');
     }
 }

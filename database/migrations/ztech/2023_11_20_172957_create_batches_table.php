@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('uniqueId')->nullable();
             $table->unsignedBigInteger('userId');
 
-            $table->string('title');
-            $table->string('description');
-            $table->dateTime('startDate');
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
+            $table->dateTime('startDate')->nullable();
             $table->dateTime('endDate')->nullable();
 
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');

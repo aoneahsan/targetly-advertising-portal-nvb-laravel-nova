@@ -3,10 +3,12 @@
 namespace App\Nova\Default;
 
 use App\Nova\Resource;
+use App\Nova\ZTech\Batch;
 use App\Zaions\Helpers\ZHelpers;
 use Dniccum\PhoneNumber\PhoneNumber;
 
 use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Gravatar;
@@ -35,7 +37,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'email';
 
     /**
      * The columns that should be searched.
@@ -168,6 +170,8 @@ class User extends Resource
 
             KeyValue::make('Extra Attributes', 'extraAttributes')
                 ->rules('nullable'),
+
+            BelongsToMany::make('Batches', 'batch', Batch::class),
 
         ];
     }

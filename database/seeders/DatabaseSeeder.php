@@ -11,6 +11,7 @@ use Database\Seeders\Default\RolePermissionsSeeder;
 use Database\Seeders\Default\TaskSeeder;
 use Database\Seeders\Default\UserSeeder;
 use Database\Seeders\ZLink\SocialMedia\PostSeeder;
+use Database\Seeders\ZTech\BatchSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -34,6 +35,8 @@ class DatabaseSeeder extends Seeder
 
             // Social Media DB Seeders
             PostSeeder::class,
+
+            BatchSeeder::class
         ]);
     }
 }

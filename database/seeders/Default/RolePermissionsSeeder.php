@@ -18,7 +18,9 @@ class RolePermissionsSeeder extends Seeder
     public function run(): void
     {
         // Default Roles
-        $superAdminRole = Role::create(['name' => RolesEnum::superAdmin->name]);
+        if (!Role::where('name', RolesEnum::superAdmin->name)->first()) {
+            $superAdminRole = Role::create(['name' => RolesEnum::superAdmin->name]);
+        }
         $adminRole = Role::create(['name' => RolesEnum::admin->name]);
         $userRole = Role::create(['name' => RolesEnum::user->name]);
 

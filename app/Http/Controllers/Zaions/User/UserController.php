@@ -44,7 +44,7 @@ class UserController extends Controller
                 'name' => 'nullable|string|max:250',
                 'firstname' => 'nullable|string|max:250',
                 'lastname' => 'nullable|string|max:250',
-                'phonenumber' => 'nullable|string|max:250',
+                'phoneNumber' => 'nullable|string|max:250',
                 'description' => 'nullable|string|max:1000',
                 'website' => 'nullable|string|max:250',
                 'language' => 'nullable|string|max:250',
@@ -52,7 +52,7 @@ class UserController extends Controller
                 'country' => 'nullable|string|max:250',
                 'address' => 'nullable|string|max:250',
                 'city' => 'nullable|string|max:250',
-                'profileimage' => 'nullable|string|max:250',
+                'profilePitcher' => 'nullable|string|max:250',
                 'avatar' => 'nullable|string|max:250'
             ]);
             $user = User::where('id', $request->user()->id)->first();
@@ -61,7 +61,7 @@ class UserController extends Controller
                     'name' => $request->has('name') ? $request->name : $user->name,
                     'firstname' => $request->has('firstname') ? $request->firstname : $user->firstname,
                     'lastname' => $request->has('lastname') ? $request->lastname : $user->lastname,
-                    'phonenumber' => $request->has('phonenumber') ? $request->phonenumber : $user->phonenumber,
+                    'phoneNumber' => $request->has('phoneNumber') ? $request->phoneNumber : $user->phoneNumber,
                     'description' => $request->has('description') ? $request->description : $user->description,
                     'website' => $request->has('website') ? $request->website : $user->website,
                     'language' => $request->has('language') ? $request->language : $user->language,
@@ -69,7 +69,7 @@ class UserController extends Controller
                     'country' => $request->has('country') ? $request->country : $user->country,
                     'address' => $request->has('address') ? $request->address : $user->address,
                     'city' => $request->has('city') ? $request->city : $user->city,
-                    'profileimage' => $request->has('profileimage') ? $request->profileimage : $user->profileimage,
+                    'profilePitcher' => $request->has('profilePitcher') ? $request->profilePitcher : $user->profilePitcher,
                     'avatar' => $request->has('avatar') ? $request->avatar : $user->avatar
                 ])->save();
                 $updatedUserInfo = User::where('id', $request->user()->id)->first();

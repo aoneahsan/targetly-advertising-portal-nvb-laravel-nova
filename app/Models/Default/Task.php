@@ -18,10 +18,9 @@ class Task extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'namazOfferedAt' => 'datetime',
-        'courseStartDate' => 'datetime',
+        'startDate' => 'datetime',
+        'endDate' => 'datetime',
         'extraAttributes' => 'array',
-        'courseEstimateDate' => 'datetime'
     ];
 
 

@@ -2,11 +2,15 @@
 
 namespace App\Models\Default;
 
+use App\Models\ZTech\Batch;
+use App\Models\ZTech\Student;
 use App\Zaions\Enums\PermissionsEnum;
 use App\Zaions\Enums\RolesEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -98,5 +102,11 @@ class User extends Authenticatable
     public function attachments(): MorphMany
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    // If user is a student then it will belong to a batch
+    public function batch(): HasManyThrough
+    {
+        return $this->hasManyThrough(Batch::class, Student::class, 'userId', 'batchId', 'id', 'id');
     }
 }

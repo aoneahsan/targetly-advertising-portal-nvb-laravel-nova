@@ -3,6 +3,9 @@
 namespace App\Models\Default;
 
 use App\Models\ZTech\Batch;
+use App\Models\ZTech\Installment;
+use App\Models\ZTech\Receipt;
+use App\Models\ZTech\Recovery;
 use App\Models\ZTech\Student;
 use App\Zaions\Enums\PermissionsEnum;
 use App\Zaions\Enums\RolesEnum;
@@ -108,5 +111,20 @@ class User extends Authenticatable
     public function batch(): BelongsToMany
     {
         return $this->belongsToMany(Batch::class, Student::class, 'userId', 'batchId', 'id', 'id');
+    }
+
+    public function receipts(): HasMany
+    {
+        return $this->hasMany(Receipt::class, 'userId', 'id');
+    }
+
+    public function recoveries(): HasMany
+    {
+        return $this->hasMany(Recovery::class, 'userId', 'id');
+    }
+
+    public function installments(): HasMany
+    {
+        return $this->hasMany(Installment::class, 'userId', 'id');
     }
 }

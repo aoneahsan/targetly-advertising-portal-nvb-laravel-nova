@@ -2,36 +2,32 @@
 
 namespace App\Nova\ZTech;
 
-use App\Nova\Default\User;
 use App\Nova\Resource;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\KeyValue;
-use Laravel\Nova\Fields\Hidden;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Boolean;
 
-class Batch extends Resource
+class Notice extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\ZTech\Batch>
+     * @var class-string<\App\Models\ZTech\Notice>
      */
-    public static $model = \App\Models\ZTech\Batch::class;
+    public static $model = \App\Models\ZTech\Notice::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    // public static $title = 'title';
     public function title() : string {
         return 'Title: ' . $this->title;
     }
@@ -58,21 +54,17 @@ class Batch extends Resource
     {
         return [
             ID::make()->sortable(),
-
+            
             Hidden::make('userId', 'userId')
                 ->default(function (NovaRequest $request) {
                     return $request->user()->getKey();
                 }),
-            // Normal Form Fields
+
             Text::make('Title', 'title')
                 ->sortable()
                 ->rules(config('zInAppConfig.fieldRules.text')),
 
-            Textarea::make('Description', 'description')->rules(config('zInAppConfig.fieldRules.content')),
-
-            Date::make('Start Date', 'startDate')->rules('required'),
-
-            Date::make('Estimate Date', 'endDate')->rules('nullable'),
+            Textarea::make('Content', 'content')->rules(config('zInAppConfig.fieldRules.content')),
 
             Boolean::make('Is active', 'isActive')->default(true)
                 ->show(function (NovaRequest $request) {
@@ -86,8 +78,7 @@ class Batch extends Resource
                     return $this->extraAttributes !== null;
                 }),
 
-            BelongsToMany::make('Students', 'students', User::class),
-            hasMany::make('Notices', 'notices', Notice::class),
+            BelongsTo::make('Batch', 'batch', Batch::class),
         ];
     }
 

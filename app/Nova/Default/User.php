@@ -4,6 +4,9 @@ namespace App\Nova\Default;
 
 use App\Nova\Resource;
 use App\Nova\ZTech\Batch;
+use App\Nova\ZTech\Receipt;
+use App\Nova\ZTech\Recovery;
+use App\Nova\ZTech\Installment;
 use App\Zaions\Helpers\ZHelpers;
 use Dniccum\PhoneNumber\PhoneNumber;
 
@@ -12,6 +15,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Password;
@@ -37,7 +41,13 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'email';
+    // public static $title = 'email';
+    public function title() : string {
+        return 'Username: ' . $this->username;
+    }
+    public function subTitle() : string {
+        return 'Email: ' . $this->email;
+    }
 
     /**
      * The columns that should be searched.
@@ -45,7 +55,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'email',
+     'email', 'username'
     ];
 
     /**
@@ -74,23 +84,14 @@ class User extends Resource
                     return uniqid();
                 }),
 
-            Text::make('Name')
+            Text::make('Username', 'username')
                 ->sortable()
-                ->rules('required', 'max:255')
+                ->rules(config('zInAppConfig.fieldRules.text'))
                 ->showWhenPeeking(),
 
-            Text::make('Slug')
+            Text::make('Email', 'email')
                 ->sortable()
-                ->hideFromIndex()
-                ->showOnDetail(function (NovaRequest $request) {
-                    return ZHelpers::isNRUserSuperAdmin($request);
-                })
-                ->hideWhenCreating()
-                ->hideWhenUpdating(),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
+                ->rules(config('zInAppConfig.fieldRules.emailRules'))
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}')
                 ->showOnUpdating(function (NovaRequest $request) {
@@ -100,16 +101,16 @@ class User extends Resource
                     return $query->where($attribute, 'LIKE', "%{$value}%");
                 }),
 
-            Password::make('Password')
+            Password::make('Password', 'password')
                 ->onlyOnForms()
-                ->creationRules('required', Rules\Password::defaults())
-                ->updateRules('nullable', Rules\Password::defaults())
+                ->creationRules(config('zInAppConfig.fieldRules.password'))
+                ->updateRules(config('zInAppConfig.fieldRules.passwordNullable'))
                 ->showOnUpdating(function (NovaRequest $request) {
                     return ZHelpers::isNRUserSuperAdmin($request);
                 }),
 
             Image::make('Profile Pitcher', 'profilePitcher')
-                ->rules('nullable', 'image')
+                ->rules(config('zInAppConfig.fieldRules.imageNullable'))
                 ->disk(ZHelpers::getActiveFileDriver())
                 ->maxWidth(300),
 
@@ -127,7 +128,7 @@ class User extends Resource
                 ->min(3)
                 ->max(12)
                 ->step('any')
-                ->rules('required', 'numeric', 'min:3', 'max:12')
+                ->rules(config('zInAppConfig.fieldRules.numaric'))
                 ->showOnIndex(function (NovaRequest $request) {
                     return ZHelpers::isNRUserSuperAdmin($request);
                 })
@@ -163,15 +164,21 @@ class User extends Resource
                 }),
 
 
-            Boolean::make('isActive', 'isActive')->default(true)
+            Boolean::make('Is active', 'isActive')->default(true)
                 ->show(function (NovaRequest $request) {
                     return ZHelpers::isNRUserSuperAdmin($request);
                 }),
 
-            KeyValue::make('Extra Attributes', 'extraAttributes')
-                ->rules('nullable'),
+            KeyValue::make('Extra attributes', 'extraAttributes')
+                ->rules(config('zInAppConfig.fieldRules.jsonNullable')),
 
             BelongsToMany::make('Batches', 'batch', Batch::class),
+
+            HasMany::make('Student receipts', 'receipts', Receipt::class),
+
+            HasMany::make('Student recoveries', 'recoveries', Recovery::class),
+
+            HasMany::make('Student installments', 'installments', Installment::class)
 
         ];
     }

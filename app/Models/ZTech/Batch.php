@@ -26,32 +26,11 @@ class Batch extends Model
     // Relationship methods
     public function students(): BelongsToMany
     {
-        // return $this->hasManyThrough(User::class, Student::class, 'batchId', 'id', 'id', 'userId');
         return $this->belongsToMany(User::class, Student::class, 'batchId', 'userId', 'id', 'id');
     }
+
+    public function notices(): HasMany
+    {
+        return $this->hasMany(Notice::class, 'batchId', 'id');
+    }
 }
-
-// users
-//     id - integer
-//     name - string
- 
-// batch
-//     id - integer
-//     name - string
- 
-// students
-//     user_id - integer
-//     batch_id - integer
-
-
-// users
-//     id - integer
-//     name - string
- 
-// roles
-//     id - integer
-//     name - string
- 
-// role_user
-//     user_id - integer
-//     role_id - integer

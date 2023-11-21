@@ -1,6 +1,5 @@
 <?php
 
-use App\Zaions\Enums\TaskStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('installments', function (Blueprint $table) {
             $table->id();
             $table->string('uniqueId')->nullable();
             $table->unsignedBigInteger('userId');
-            
+
             $table->string('title')->nullable();
-            $table->string('description')->nullable();
-            $table->dateTime('startDate')->nullable();
-            $table->dateTime('endDate')->nullable();
-            $table->string('status')->nullable();
-            
+            $table->string('content')->nullable();
+
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('sortOrderNo')->default(0)->nullable();
@@ -39,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('installments');
     }
 };

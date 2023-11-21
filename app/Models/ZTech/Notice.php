@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\ZLink\SocialMedia;
+namespace App\Models\ZTech;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,20 +8,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Nova\Actions\Actionable;
 
-class Post extends Model
+class Notice extends Model
 {
-    use HasFactory, Actionable;
+    use HasFactory, SoftDeletes, Actionable;
 
     protected $guarded = [];
 
     protected $casts = [
         'extraAttributes' => 'array',
-
     ];
 
     // Relationship methods
-    public function user(): BelongsTo
+    public function batch(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'userId', 'id');
+        return $this->belongsTo(Batch::class, 'batchId', 'id');
     }
 }

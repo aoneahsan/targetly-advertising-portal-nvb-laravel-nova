@@ -41,7 +41,13 @@ class Task extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    // public static $title = 'id';
+    public function title() : string {
+        return 'Title: ' . $this->title;
+    }
+    public function subTitle() : string {
+        return 'CreatedAt: ' . $this->created_at;
+    }
 
     /**
      * The columns that should be searched.
@@ -49,7 +55,7 @@ class Task extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'type'
+        'id', 'title'
     ];
 
     /**
@@ -97,9 +103,9 @@ class Task extends Resource
             // Normal Form Fields
             Text::make('Title', 'title')
                 ->sortable()
-                ->rules('required', 'max:'. config('zInAppConfig.stringLength')),
+                ->rules(config('zInAppConfig.fieldRules.text')),
 
-            Textarea::make('Description', 'description')->rules('required', 'max:' . config('zInAppConfig.textLength')),
+            Textarea::make('Description', 'description')->rules(config('zInAppConfig.fieldRules.content')),
 
             Select::make('Task Status', 'status')
                 ->default(TaskStatusEnum::todo->name)
@@ -124,7 +130,7 @@ class Task extends Resource
                 }),
 
             KeyValue::make('Extra Attributes', 'extraAttributes')
-                ->rules('nullable', 'json')
+                ->rules(config('zInAppConfig.fieldRules.jsonNullable'))
                 ->hideFromIndex()
                 ->showOnDetail(function () {
                     return $this->extraAttributes !== null;

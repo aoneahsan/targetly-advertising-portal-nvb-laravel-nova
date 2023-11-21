@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Models\ZLink\SocialMedia;
+namespace App\Models\ZTech;
 
+use App\Models\Default\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Nova\Actions\Actionable;
 
-class Post extends Model
+class Receipt extends Model
 {
-    use HasFactory, Actionable;
+    use HasFactory, SoftDeletes, Actionable;
 
     protected $guarded = [];
 
     protected $casts = [
         'extraAttributes' => 'array',
-
     ];
 
     // Relationship methods

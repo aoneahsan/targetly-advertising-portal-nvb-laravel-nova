@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('userId');
 
             $table->string('title')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->dateTime('startDate')->nullable();
             $table->dateTime('endDate')->nullable();
 

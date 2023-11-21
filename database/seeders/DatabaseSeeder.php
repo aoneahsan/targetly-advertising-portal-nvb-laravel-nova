@@ -12,6 +12,10 @@ use Database\Seeders\Default\TaskSeeder;
 use Database\Seeders\Default\UserSeeder;
 use Database\Seeders\ZLink\SocialMedia\PostSeeder;
 use Database\Seeders\ZTech\BatchSeeder;
+use Database\Seeders\ZTech\InstallmentSeeder;
+use Database\Seeders\ZTech\NoticeSeeder;
+use Database\Seeders\ZTech\ReceiptSeeder;
+use Database\Seeders\ZTech\RecoverySeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,13 +34,12 @@ class DatabaseSeeder extends Seeder
             CommentSeeder::class,
             AttachmentSeeder::class,
 
-            // ----------------- ZLink Project DB Seeders -----------------
-            // ShortLinks DB Seeder
-
-            // Social Media DB Seeders
-            PostSeeder::class,
-
-            BatchSeeder::class
+            // ----------------- ZTech Project DB Seeders -----------------
+            BatchSeeder::class,
+            NoticeSeeder::class,
+            ReceiptSeeder::class,
+            RecoverySeeder::class,
+            InstallmentSeeder::class
         ]);
     }
 }

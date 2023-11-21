@@ -11,6 +11,8 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\KeyValue;
 use App\Nova\Default\User;
+use App\Nova\Filters\ZTech\BatchFilter;
+use App\Nova\Filters\ZTech\UserFilter;
 
 class Recovery extends Resource
 {
@@ -74,7 +76,9 @@ class Recovery extends Resource
                 return $this->extraAttributes !== null;
             }),
 
-            BelongsTo::make('Student', 'user', User::class)
+            BelongsTo::make('Student', 'user', User::class),
+            
+            BelongsTo::make('Batch', 'batch', Batch::class),
         ];
     }
 
@@ -97,7 +101,10 @@ class Recovery extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            new BatchFilter,
+            new UserFilter
+        ];
     }
 
     /**

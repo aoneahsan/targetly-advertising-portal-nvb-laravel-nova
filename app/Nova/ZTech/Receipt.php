@@ -3,6 +3,8 @@
 namespace App\Nova\ZTech;
 
 use App\Nova\Default\User;
+use App\Nova\Filters\ZTech\BatchFilter;
+use App\Nova\Filters\ZTech\UserFilter;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -27,10 +29,12 @@ class Receipt extends Resource
      * @var string
      */
     // public static $title = 'id';
-    public function title() : string {
+    public function title(): string
+    {
         return 'Title: ' . $this->title;
     }
-    public function subTitle() : string {
+    public function subTitle(): string
+    {
         return 'CreatedAt: ' . $this->created_at;
     }
 
@@ -65,18 +69,20 @@ class Receipt extends Resource
                 ->sortable()
                 ->rules(config('zInAppConfig.fieldRules.text')),
 
-                
-                Textarea::make('Content', 'content')->rules(config('zInAppConfig.fieldRules.content')),
-                
-                KeyValue::make('Extra Attributes', 'extraAttributes')
+
+            Textarea::make('Content', 'content')->rules(config('zInAppConfig.fieldRules.content')),
+
+            KeyValue::make('Extra Attributes', 'extraAttributes')
                 ->rules(config('zInAppConfig.fieldRules.jsonNullable'))
                 ->hideFromIndex()
                 ->showOnDetail(function () {
                     return $this->extraAttributes !== null;
                 }),
 
-            BelongsTo::make('Student', 'user', User::class)
+            BelongsTo::make('Student', 'user', User::class),
             
+            BelongsTo::make('Batch', 'batch', Batch::class),
+
         ];
     }
 
@@ -99,7 +105,10 @@ class Receipt extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            new BatchFilter,
+            new UserFilter
+        ];
     }
 
     /**

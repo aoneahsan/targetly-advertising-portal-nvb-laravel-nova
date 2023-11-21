@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('uniqueId')->nullable();
             $table->unsignedBigInteger('userId');
+            $table->unsignedBigInteger('batchId');
 
             $table->string('title')->nullable();
-            $table->string('content')->nullable();
+            $table->text('content')->nullable();
 
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
 

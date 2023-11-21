@@ -3,10 +3,13 @@
 namespace App\Zaions\Helpers;
 
 use App\Models\Default\User;
+use App\Models\ZTech\Batch;
 use App\Zaions\Enums\NamazEnum;
 use App\Zaions\Enums\RolesEnum;
 use Carbon\Carbon;
+use Database\Factories\ZTech\BatchFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Mockery\Undefined;
@@ -342,6 +345,81 @@ class ZHelpers
       }
     } catch (\Throwable $th) {
       return null;
+    }
+  }
+
+  public static function checkDefaultUserExcise()
+  {
+    $ahsan = User::where('email', 'ahsan@zaions.com')->first();
+    $superAdmin = User::where('email', 'superAdmin@zaions.com')->first();
+    $admin = User::where('email', 'admin@zaions.com')->first();
+    $user = User::where('email', 'user@zaions.com')->first();
+
+    if (!$ahsan) {
+      User::create([
+        'uniqueId' => uniqid(),
+        'username' => 'ahsan',
+        'slug' => 'ahsan',
+        'email' => 'ahsan@zaions.com',
+        'password' => Hash::make("asd123!@#"),
+        'email_verified_at' => Carbon::now(),
+        'dailyMinOfficeTime' => 8,
+        'dailyMinOfficeTimeActivity' => 85
+      ]);
+    }
+
+    if (!$superAdmin) {
+      User::create([
+        'uniqueId' => uniqid(),
+        'username' => 'superAdmin',
+        'slug' => 'superAdmin',
+        'email' => 'superAdmin@zaions.com',
+        'password' => Hash::make("asd123!@#"),
+        'email_verified_at' => Carbon::now(),
+        'dailyMinOfficeTime' => 8,
+        'dailyMinOfficeTimeActivity' => 85
+      ]);
+    }
+
+    if (!$admin) {
+      User::create([
+        'uniqueId' => uniqid(),
+        'username' => 'admin',
+        'slug' => 'admin',
+        'email' => 'admin@zaions.com',
+        'password' => Hash::make("asd123!@#"),
+        'email_verified_at' => Carbon::now(),
+        'dailyMinOfficeTime' => 8,
+        'dailyMinOfficeTimeActivity' => 85
+      ]);
+    }
+
+    if (!$user) {
+      User::create([
+        'uniqueId' => uniqid(),
+        'username' => 'user',
+        'slug' => 'user',
+        'email' => 'user@zaions.com',
+        'password' => Hash::make("asd123!@#"),
+        'email_verified_at' => Carbon::now(),
+        'dailyMinOfficeTime' => 8,
+        'dailyMinOfficeTimeActivity' => 85
+      ]);
+    }
+  }
+
+  public static function checkDefaultBatchesExcise()
+  {
+    $itemsCount = Batch::count();
+
+    if ($itemsCount >= 1) {
+      $items = Batch::limit(2)->pluck('id');
+      return $items;
+    } else {
+      Batch::factory()->count(2)->make();
+
+      $items = Batch::limit(2)->pluck('id');
+      return $items;
     }
   }
 }

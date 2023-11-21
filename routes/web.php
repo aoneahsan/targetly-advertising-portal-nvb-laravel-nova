@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Zaions\TestingController;
+use App\Models\ZTech\Batch;
 use App\Zaions\Enums\RolesEnum;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -25,17 +26,23 @@ Route::get('/', function () {
 Route::get('/z-testing', function () {
 
 
-    $wsRoles = [
-        RolesEnum::ws_administrator->name => RolesEnum::ws_administrator->name,
-        RolesEnum::ws_contributor->name => RolesEnum::ws_contributor->name,
-        RolesEnum::ws_approver->name => RolesEnum::ws_approver->name,
-        RolesEnum::ws_guest->name => RolesEnum::ws_guest->name
-    ];
+    // before 21-11-23
+    // $wsRoles = [
+    //     RolesEnum::ws_administrator->name => RolesEnum::ws_administrator->name,
+    //     RolesEnum::ws_contributor->name => RolesEnum::ws_contributor->name,
+    //     RolesEnum::ws_approver->name => RolesEnum::ws_approver->name,
+    //     RolesEnum::ws_guest->name => RolesEnum::ws_guest->name
+    // ];
 
-    $roles = Role::whereIn('name', $wsRoles)->pluck('name', 'id');
+    // $roles = Role::whereIn('name', $wsRoles)->pluck('name', 'id');
 
 
-    dd($roles);
+    // dd($roles);
+
+
+    // on 21-11-23 testing what data i get from plunk
+    $batches = Batch::plunk('title', 'id')->get();
+    dd($batches);
 });
 
 Route::redirect('/', config('nova.path'));

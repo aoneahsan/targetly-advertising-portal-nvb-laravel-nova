@@ -3,6 +3,7 @@
 namespace App\Nova\ZTech;
 
 use App\Nova\Default\User;
+use App\Nova\Filters\ZTech\UserFilter;
 use App\Nova\Resource;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Http\Request;
@@ -110,7 +111,9 @@ class Batch extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            new UserFilter
+        ];
     }
 
     /**

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('batchId');
 
             $table->string('title')->nullable();
-            $table->string('content')->nullable();
-
+            $table->text('content')->nullable();
+            
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('batchId')->references('id')->on('batches')->onDelete('cascade');
 

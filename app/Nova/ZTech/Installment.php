@@ -10,6 +10,8 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Default\User;
+use App\Nova\Filters\ZTech\BatchFilter;
+use App\Nova\Filters\ZTech\UserFilter;
 use Laravel\Nova\Fields\KeyValue;
 
 class Installment extends Resource
@@ -74,7 +76,9 @@ class Installment extends Resource
                 return $this->extraAttributes !== null;
             }),
 
-            BelongsTo::make('Student', 'user', User::class)
+            BelongsTo::make('Student', 'user', User::class),
+            
+            BelongsTo::make('Batch', 'batch', Batch::class),
         ];
     }
 
@@ -97,7 +101,10 @@ class Installment extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            new BatchFilter,
+            new UserFilter
+        ];
     }
 
     /**

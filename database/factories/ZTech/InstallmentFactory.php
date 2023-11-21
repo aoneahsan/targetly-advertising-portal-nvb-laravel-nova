@@ -2,6 +2,9 @@
 
 namespace Database\Factories\ZTech;
 
+use App\Models\Default\User;
+use App\Models\ZTech\Batch;
+use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +19,18 @@ class InstallmentFactory extends Factory
      */
     public function definition(): array
     {
+        ZHelpers::checkDefaultUserExcise();
+
+        $ahsan = User::where('email', 'ahsan@zaions.com')->first();
+
+        $batchesIds = ZHelpers::checkDefaultBatchesExcise();
+
         return [
-            //
+            'uniqueId' => uniqid(),
+            'userId' => $ahsan->id,
+            'batchId'=> collect($batchesIds)->random(),
+            'title' => fake()->title(),
+            'content' => fake()->text(400),
         ];
     }
 }

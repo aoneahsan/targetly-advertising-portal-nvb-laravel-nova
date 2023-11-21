@@ -24,4 +24,9 @@ class Installment extends Model
     {
         return $this->belongsTo(User::class, 'userId', 'id');
     }
+
+    public function batch(): BelongsTo
+    {
+        return $this->belongsTo(Batch::class, 'batchId', 'id');
+    }
 }

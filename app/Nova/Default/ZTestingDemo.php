@@ -367,7 +367,7 @@ class ZTestingDemo extends HiddenResource
             // https://novapackages.com/packages/alexwenzel/nova-dependency-container
             // DependencyContainer::make([
             //     Text::make('First Name', 'name')
-            // ])->dependsOn('email', 'ahsan@zaions.com')
+            // ])->dependsOn('email', EmailsEnum::defaultEmail->value)
             //             ->dependsOn('field1', 'value1')
             // ->dependsOnNotEmpty('field2')
             // ->dependsOn('field3', 'value3'),

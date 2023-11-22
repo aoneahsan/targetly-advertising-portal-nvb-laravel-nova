@@ -31,6 +31,18 @@ class ReplyPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -57,6 +69,18 @@ class ReplyPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -74,6 +98,18 @@ class ReplyPolicy
                 return true;
             } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::admin->value)) {
                 if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 
@@ -100,6 +136,18 @@ class ReplyPolicy
                 }
             } else if ($user->id === $reply->user->id) {
                 return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
 
             return false;
@@ -118,6 +166,18 @@ class ReplyPolicy
                 return true;
             } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::admin->value)) {
                 if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 

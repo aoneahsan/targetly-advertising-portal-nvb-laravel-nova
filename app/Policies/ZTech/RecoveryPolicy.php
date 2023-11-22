@@ -21,17 +21,29 @@ class RecoveryPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, $receipt): bool
+    public function view(User $user, $recovery): bool
     {
         if ($user->hasPermissionTo(PermissionsEnum::view_recovery->name)) {
             if ($user->hasRole(RolesEnum::superAdmin->value)) {
                 return true;
             }
 
-            if ($user->id === $receipt->user->id) {
+            if ($user->id === $recovery->user->id) {
                 return true;
-            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::admin->value)) {
-                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 
@@ -53,17 +65,29 @@ class RecoveryPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, $receipt): bool
+    public function update(User $user, $recovery): bool
     {
         if ($user->hasPermissionTo(PermissionsEnum::update_recovery->name)) {
             if ($user->hasRole(RolesEnum::superAdmin->value)) {
                 return true;
             }
 
-            if ($user->id === $receipt->user->id) {
+            if ($user->id === $recovery->user->id) {
                 return true;
-            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::admin->value)) {
-                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 
@@ -85,13 +109,25 @@ class RecoveryPolicy
                 return true;
             }
 
-            if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::admin->name)) {
+            if ($user->id === $recovery->user->id) {
+                return true;
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::admin->name)) {
                 if ($recovery->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
                     return false;
                 } else {
                     return true;
                 }
-            } else if ($user->id === $recovery->user->id) {
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
                 return true;
             }
 
@@ -103,17 +139,29 @@ class RecoveryPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, $receipt): bool
+    public function restore(User $user, $recovery): bool
     {
         if ($user->hasPermissionTo(PermissionsEnum::restore_recovery->name)) {
             if ($user->hasRole(RolesEnum::superAdmin->value)) {
                 return true;
             }
 
-            if ($user->id === $receipt->user->id) {
+            if ($user->id === $recovery->user->id) {
                 return true;
-            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::admin->value)) {
-                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $recovery->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($recovery->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 

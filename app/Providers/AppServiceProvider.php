@@ -24,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
         // To find migration files in sub folders - Code Start
         $mainPath = database_path('migrations');
         $ztechPath = database_path('migrations/ztech');
-        $paths = array_merge([$mainPath], glob($mainPath . '/*', GLOB_ONLYDIR), glob($ztechPath . '/*', GLOB_ONLYDIR));
+        $targetlyPath = database_path('migrations/targetly');
+        $paths = array_merge([$mainPath], glob($mainPath . '/*', GLOB_ONLYDIR), glob($ztechPath . '/*', GLOB_ONLYDIR), glob($targetlyPath . '/*', GLOB_ONLYDIR));
 
         $this->loadMigrationsFrom($paths);
         // To find migration files in sub folders - Code End

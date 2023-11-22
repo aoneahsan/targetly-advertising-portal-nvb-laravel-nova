@@ -36,6 +36,18 @@ class InstallmentPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -68,6 +80,18 @@ class InstallmentPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -85,14 +109,26 @@ class InstallmentPolicy
                 return Response::allow();
             }
 
-            if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::admin->name)) {
+            if ($user->id === $installment->user->id) {
+                return Response::allow();
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::admin->name)) {
                 if ($installment->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
                     return Response::deny('You do not own this installment.');
                 } else {
                     return Response::allow();
                 }
-            } else if ($user->id === $installment->user->id) {
-                return Response::allow();
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
 
             return Response::deny('You do not own this installment.');
@@ -114,6 +150,18 @@ class InstallmentPolicy
                 return true;
             } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::admin->value)) {
                 if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $installment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($installment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 

@@ -2,6 +2,7 @@
 
 namespace App\Models\Default;
 
+use App\Models\Targetly\SocialPostLink;
 use App\Models\ZTech\Batch;
 use App\Models\ZTech\Installment;
 use App\Models\ZTech\Receipt;
@@ -126,5 +127,10 @@ class User extends Authenticatable
     public function installments(): HasMany
     {
         return $this->hasMany(Installment::class, 'userId', 'id');
+    }
+
+    public function socialPostLink(): HasMany 
+    {
+        return $this->hasMany(SocialPostLink::class, 'userId', 'id');
     }
 }

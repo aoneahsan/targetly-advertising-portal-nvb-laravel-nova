@@ -3,6 +3,7 @@
 namespace Database\Factories\ZTech;
 
 use App\Models\Default\User;
+use App\Zaions\Enums\EmailsEnum;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,9 +19,9 @@ class RecoveryFactory extends Factory
      */
     public function definition(): array
     {
-        ZHelpers::checkDefaultUserExcise();
+        ZHelpers::defaultUsers();
 
-        $ahsan = User::where('email', 'ahsan@zaions.com')->first();
+        $ahsan = User::where('email', EmailsEnum::defaultEmail->value)->first();
 
         $batchesIds = ZHelpers::checkDefaultBatchesExcise();
         

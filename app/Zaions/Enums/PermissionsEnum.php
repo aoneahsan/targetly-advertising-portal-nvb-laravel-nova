@@ -144,6 +144,16 @@ enum PermissionsEnum: string
   case restore_installment = 'restore_installment';
   case forceDelete_installment = 'forceDelete_installment';
 
+  // ------- Targetly -------
+  case viewAny_socialPostLink = 'viewAny_socialPostLink';
+  case view_socialPostLink = 'view_socialPostLink';
+  case create_socialPostLink = 'create_socialPostLink';
+  case update_socialPostLink = 'update_socialPostLink';
+  case delete_socialPostLink = 'delete_socialPostLink';
+  case replicate_socialPostLink = 'replicate_socialPostLink';
+  case restore_socialPostLink = 'restore_socialPostLink';
+  case forceDelete_socialPostLink = 'forceDelete_socialPostLink';
+
   // case viewAny_ = 'viewAny_';
   // case view_ = 'view_';
   // case create_ = 'create_';

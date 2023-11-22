@@ -36,6 +36,18 @@ class ReceiptPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -68,6 +80,18 @@ class ReceiptPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -79,19 +103,31 @@ class ReceiptPolicy
      */
     public function delete(User $user, $receipt): bool
     {
-        if($user->hasPermissionTo(PermissionsEnum::delete_receipt->name)){
+        if ($user->hasPermissionTo(PermissionsEnum::delete_receipt->name)) {
 
             if ($user->hasRole(RolesEnum::superAdmin->name)) {
                 return true;
             }
 
-            if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::admin->name)) {
+            if ($user->id === $receipt->user->id) {
+                return true;
+            } else  if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::admin->name)) {
                 if ($receipt->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
                     return false;
                 } else {
                     return true;
                 }
-            } else if ($user->id === $receipt->user->id) {
+            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
                 return true;
             }
 
@@ -114,6 +150,18 @@ class ReceiptPolicy
                 return true;
             } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::admin->value)) {
                 if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $receipt->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($receipt->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 

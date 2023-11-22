@@ -27,6 +27,10 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\ZTech\Notice' => 'App\Policies\ZTech\NoticePolicy',
         'App\Models\ZTech\Receipt' => 'App\Policies\ZTech\ReceiptPolicy',
         'App\Models\ZTech\Recovery' => 'App\Policies\ZTech\RecoveryPolicy',
+
+        // 
+        'App\Models\Targetly\SocialPostLink' => 'App\Policies\Targetly\SocialPostLinkPolicy',
+
     ];
 
     /**

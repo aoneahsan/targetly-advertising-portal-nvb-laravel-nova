@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Zaions\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Zaions\User\UserDataResource;
 use App\Models\Default\User;
+use App\Zaions\Enums\EmailsEnum;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class UserController extends Controller
 {
     public function listUsers(Request $request)
     {
-        $items = User::where('email', 'ahsan@zaions.com')->with('actions', 'nova_notifications')->get();
+        $items = User::where('email', EmailsEnum::defaultEmail->value)->with('actions', 'nova_notifications')->get();
         return ZHelpers::sendBackRequestCompletedResponse([
             // 'items' => UserDataResource::collection($items),
             'items' => $items,

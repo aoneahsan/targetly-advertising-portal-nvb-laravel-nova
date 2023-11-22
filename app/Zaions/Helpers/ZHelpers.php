@@ -4,6 +4,7 @@ namespace App\Zaions\Helpers;
 
 use App\Models\Default\User;
 use App\Models\ZTech\Batch;
+use App\Zaions\Enums\EmailsEnum;
 use App\Zaions\Enums\NamazEnum;
 use App\Zaions\Enums\PermissionsEnum;
 use App\Zaions\Enums\RolesEnum;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class ZHelpers
 {
@@ -347,63 +349,101 @@ class ZHelpers
     }
   }
 
-  public static function checkDefaultUserExcise()
+  public static function defaultUsers()
   {
-    $ahsan = User::where('email', 'ahsan@zaions.com')->first();
-    $superAdmin = User::where('email', 'superAdmin@zaions.com')->first();
-    $admin = User::where('email', 'admin@zaions.com')->first();
-    $user = User::where('email', 'user@zaions.com')->first();
+    $ahsan = User::where('email', EmailsEnum::defaultEmail->value)->first();
+    $superAdmin = User::where('email', EmailsEnum::superAdminEmail->value)->first();
+    $admin = User::where('email', EmailsEnum::adminEmail->value)->first();
+    $manager = User::where('email', EmailsEnum::managerEmail->value)->first();
+    $employee = User::where('email', EmailsEnum::employeeEmail->value)->first();
+    $user = User::where('email', EmailsEnum::userEmail->value)->first();
+
+    $superAdminRole = Role::where('name', RolesEnum::superAdmin->name)->get();
+    $adminRole = Role::where('name', RolesEnum::admin->name)->get();
+    $managerRole = Role::where('name', RolesEnum::manager->name)->get();
+    $employeeRole = Role::where('name', RolesEnum::employee->name)->get();
+    $userRole = Role::where('name', RolesEnum::user->name)->get();
+
+    if(!$superAdminRole){
+      $superAdminRole = Role::create(['name' => RolesEnum::superAdmin->name]);
+    }
+    if(!$adminRole){
+      $adminRole = Role::create(['name' => RolesEnum::admin->name]);
+    }
+    if(!$managerRole){
+      $managerRole = Role::create(['name' => RolesEnum::manager->name]);
+    }
+    if(!$employeeRole){
+      $employeeRole = Role::create(['name' => RolesEnum::employee->name]);
+    }
+    if(!$userRole){
+      $userRole = Role::create(['name' => RolesEnum::user->name]);
+    }
 
     if (!$ahsan) {
-      User::create([
+      $ahsan = User::create([
         'uniqueId' => uniqid(),
         'username' => 'ahsan',
-        'slug' => 'ahsan',
-        'email' => 'ahsan@zaions.com',
+        'email' => EmailsEnum::defaultEmail->value,
         'password' => Hash::make("asd123!@#"),
-        'email_verified_at' => Carbon::now(),
-        'dailyMinOfficeTime' => 8,
-        'dailyMinOfficeTimeActivity' => 85
+        'email_verified_at' => Carbon::now()
       ]);
+      $ahsan->assignRole($superAdminRole);
     }
 
     if (!$superAdmin) {
-      User::create([
+      $superAdmin = User::create([
         'uniqueId' => uniqid(),
         'username' => 'superAdmin',
-        'slug' => 'superAdmin',
-        'email' => 'superAdmin@zaions.com',
+        'email' => EmailsEnum::superAdminEmail->value,
         'password' => Hash::make("asd123!@#"),
-        'email_verified_at' => Carbon::now(),
-        'dailyMinOfficeTime' => 8,
-        'dailyMinOfficeTimeActivity' => 85
+        'email_verified_at' => Carbon::now()
       ]);
+      $superAdmin->assignRole($superAdminRole);
     }
 
     if (!$admin) {
-      User::create([
+      $admin = User::create([
         'uniqueId' => uniqid(),
         'username' => 'admin',
-        'slug' => 'admin',
-        'email' => 'admin@zaions.com',
+        'email' => EmailsEnum::adminEmail->value,
         'password' => Hash::make("asd123!@#"),
-        'email_verified_at' => Carbon::now(),
-        'dailyMinOfficeTime' => 8,
-        'dailyMinOfficeTimeActivity' => 85
+        'email_verified_at' => Carbon::now()
       ]);
+      $admin->assignRole($adminRole);
+    }
+
+    if (!$manager) {
+      $manager = User::create([
+        'uniqueId' => uniqid(),
+        'username' => 'manager',
+        'email' => EmailsEnum::managerEmail->value,
+        'password' => Hash::make("asd123!@#"),
+        'email_verified_at' => Carbon::now()
+      ]);
+      $manager->assignRole($managerRole);
+    }
+
+    if (!$employee) {
+      $employee = User::create([
+        'uniqueId' => uniqid(),
+        'username' => 'employee',
+        'email' => EmailsEnum::employeeEmail->value,
+        'password' => Hash::make("asd123!@#"),
+        'email_verified_at' => Carbon::now()
+      ]);
+      $employee->assignRole($employeeRole);
     }
 
     if (!$user) {
-      User::create([
+      $user = User::create([
         'uniqueId' => uniqid(),
         'username' => 'user',
-        'slug' => 'user',
-        'email' => 'user@zaions.com',
+        'email' => EmailsEnum::userEmail->value,
         'password' => Hash::make("asd123!@#"),
-        'email_verified_at' => Carbon::now(),
-        'dailyMinOfficeTime' => 8,
-        'dailyMinOfficeTimeActivity' => 85
+        'email_verified_at' => Carbon::now()
       ]);
+      $user->assignRole($userRole);
     }
   }
 

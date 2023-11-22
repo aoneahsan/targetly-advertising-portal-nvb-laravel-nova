@@ -8,6 +8,8 @@ enum RolesEnum: string
   case superAdmin = 'superAdmin';
   case admin = 'admin';
   case user = 'user';
+  case manager = 'manager';
+  case employee = 'employee';
 
     // Workspace roles
   case ws_contributor = 'ws_contributor';

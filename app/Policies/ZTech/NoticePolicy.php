@@ -36,6 +36,18 @@ class NoticePolicy
                 }
 
                 return true;
+            } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -68,6 +80,18 @@ class NoticePolicy
                 }
 
                 return true;
+            } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -85,13 +109,25 @@ class NoticePolicy
                 return true;
             }
 
-            if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::admin->name)) {
+            if ($user->id === $notice->user->id) {
+                return true;
+            }else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::admin->name)) {
                 if ($notice->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
                     return false;
                 } else {
                     return true;
                 }
-            } else if ($user->id === $notice->user->id) {
+            } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
                 return true;
             }
 
@@ -114,6 +150,18 @@ class NoticePolicy
                 return true;
             } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::admin->value)) {
                 if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $notice->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($notice->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 

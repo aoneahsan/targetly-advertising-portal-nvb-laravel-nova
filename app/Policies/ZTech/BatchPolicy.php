@@ -36,6 +36,18 @@ class BatchPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -68,6 +80,18 @@ class BatchPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -79,19 +103,31 @@ class BatchPolicy
      */
     public function delete(User $user, $batch): bool
     {
-        if($user->hasPermissionTo(PermissionsEnum::delete_batch->name)){
+        if ($user->hasPermissionTo(PermissionsEnum::delete_batch->name)) {
 
             if ($user->hasRole(RolesEnum::superAdmin->name)) {
                 return true;
             }
 
-            if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::admin->name)) {
+            if ($user->id === $batch->user->id) {
+                return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::admin->name)) {
                 if ($batch->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
                     return false;
-                } else {
-                    return true;
                 }
-            } else if ($user->id === $batch->user->id) {
+
+                return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
                 return true;
             }
 
@@ -114,6 +150,18 @@ class BatchPolicy
                 return true;
             } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::admin->value)) {
                 if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $batch->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($batch->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 

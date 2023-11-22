@@ -19,11 +19,30 @@ class RolePermissionsSeeder extends Seeder
     public function run(): void
     {
         // Default Roles
-        if (!Role::where('name', RolesEnum::superAdmin->name)->first()) {
+        $superAdminRole = Role::where('name', RolesEnum::superAdmin->name)->first();
+        if (!$superAdminRole) {
             $superAdminRole = Role::create(['name' => RolesEnum::superAdmin->name]);
         }
-        $adminRole = Role::create(['name' => RolesEnum::admin->name]);
-        $userRole = Role::create(['name' => RolesEnum::user->name]);
+
+        $adminRole = Role::where('name', RolesEnum::admin->name)->first();
+        if (!$adminRole) {
+            $adminRole = Role::create(['name' => RolesEnum::admin->name]);
+        }
+
+        $managerRole = Role::where('name', RolesEnum::manager->name)->first();
+        if (!$managerRole) {
+            $managerRole = Role::create(['name' => RolesEnum::manager->name]);
+        }
+
+        $employeeRole = Role::where('name', RolesEnum::employee->name)->first();
+        if (!$employeeRole) {
+            $employeeRole = Role::create(['name' => RolesEnum::employee->name]);
+        }
+        
+        $userRole = Role::where('name', RolesEnum::user->name)->first();
+        if (!$userRole) {
+            $userRole = Role::create(['name' => RolesEnum::user->name]);
+        }
 
         // workspace member roles
         Role::create(['name' => RolesEnum::ws_contributor->name]);
@@ -43,19 +62,29 @@ class RolePermissionsSeeder extends Seeder
         });
 
         $adminRolePermissions = array_filter($superAdminRolePermissions, function ($permission) {
-            return !Str::of($permission->name)->contains('restore_') && !Str::of($permission->name)->contains('forceDelete_');
+            return !Str::of($permission->name)->contains('restore_') && !Str::of($permission->name)->contains('forceDelete_') && !Str::of($permission->name)->contains('_user'); 
         });
 
         // add canBeImpersonatePermission Permission
         array_push($adminRolePermissions, $canBeImpersonatePermission);
 
+        $managerRolePermissions = array_filter($superAdminRolePermissions, function ($permission) {
+            return !Str::of($permission->name)->contains('delete_') && !Str::of($permission->name)->contains('restore_') && !Str::of($permission->name)->contains('forceDelete_') && !Str::of($permission->name)->contains('_user') && !Str::of($permission->name)->contains('_role') && !Str::of($permission->name)->contains('_permission') && !Str::of($permission->name)->contains('Impersonate_');
+        });
+
+        $employeeRolePermissions = array_filter($superAdminRolePermissions, function ($permission) {
+            return !Str::of($permission->name)->contains('delete_') && !Str::of($permission->name)->contains('restore_') && !Str::of($permission->name)->contains('forceDelete_') && !Str::of($permission->name)->contains('_user') && !Str::of($permission->name)->contains('_role') && !Str::of($permission->name)->contains('_permission') && !Str::of($permission->name)->contains('Impersonate_');
+        });
+
         $userRolePermissions = array_filter($adminRolePermissions, function ($permission) {
-            return !Str::of($permission->name)->contains('delete_') && !Str::of($permission->name)->contains('update_') && !Str::of($permission->name)->contains('_user') && !Str::of($permission->name)->contains('_role') && !Str::of($permission->name)->contains('_permission') && !Str::of($permission->name)->contains('Impersonate_');
+            return !Str::of($permission->name)->contains('delete_') && !Str::of($permission->name)->contains('update_') && !Str::of($permission->name)->contains('_user') && !Str::of($permission->name)->contains('_role') && !Str::of($permission->name)->contains('_permission') && !Str::of($permission->name)->contains('Impersonate_') && !Str::of($permission->name)->contains('restore_');
         });
 
         // Assign permissions to roles
         $superAdminRole->syncPermissions($superAdminRolePermissions);
         $adminRole->syncPermissions($adminRolePermissions);
+        $managerRole->syncPermissions($managerRolePermissions);
+        $employeeRole->syncPermissions($employeeRolePermissions);
         $userRole->syncPermissions($userRolePermissions);
     }
 }

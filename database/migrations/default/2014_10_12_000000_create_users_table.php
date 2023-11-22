@@ -14,22 +14,16 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('uniqueId')->nullable();
-            $table->string('username');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-
-            // new fields
-            $table->string('slug')->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('profilePitcher')->nullable();
             $table->string('phoneNumber')->nullable();
-            $table->integer('dailyMinOfficeTime')->default(8)->min(3)->max(12)->nullable();
-            $table->integer('dailyMinOfficeTimeActivity')->default(85)->min(75)->max(100)->nullable();
-            $table->string('timezone')->nullable();
-            $table->string('address')->nullable();
             $table->string('country')->nullable();
+            $table->string('address')->nullable();
+            $table->string('username');
+            $table->string('profilePitcher')->nullable();
 
             $table->boolean('isActive')->default(true);
             $table->integer('sortOrderNo')->default(0)->nullable();

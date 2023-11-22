@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Zaions\Testing;
 
 use App\Http\Controllers\Controller;
 use App\Models\Default\User;
+use App\Zaions\Enums\EmailsEnum;
 use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Http\Request;
 use Laravel\Nova\Notifications\NovaNotification;
@@ -13,7 +14,7 @@ class TestController extends Controller
 {
     public function notifyUser(Request $request)
     {
-        $user = User::where('email', 'ahsan@zaions.com')->first();
+        $user = User::where('email', EmailsEnum::defaultEmail->value)->first();
 
         if ($user) {
             $user->notify(

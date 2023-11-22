@@ -31,6 +31,18 @@ class HistoryPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -57,6 +69,18 @@ class HistoryPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -78,6 +102,18 @@ class HistoryPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -92,13 +128,25 @@ class HistoryPolicy
                 return true;
             }
 
-            if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::admin->name)) {
+            if ($user->id === $history->user->id) {
+                return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::admin->name)) {
                 if ($history->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
                     return false;
                 } else {
                     return true;
                 }
-            } else if ($user->id === $history->user->id) {
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
                 return true;
             }
 
@@ -118,6 +166,18 @@ class HistoryPolicy
                 return true;
             } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::admin->value)) {
                 if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $history->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($history->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 

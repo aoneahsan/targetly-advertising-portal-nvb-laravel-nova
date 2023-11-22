@@ -31,6 +31,18 @@ class AttachmentPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -57,6 +69,18 @@ class AttachmentPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -78,6 +102,18 @@ class AttachmentPolicy
                 }
 
                 return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
+                return true;
             }
         }
 
@@ -86,19 +122,31 @@ class AttachmentPolicy
 
     public function delete(User $user, $attachment)
     {
-        if($user->hasPermissionTo(PermissionsEnum::delete_attachment->name)){
+        if ($user->hasPermissionTo(PermissionsEnum::delete_attachment->name)) {
 
             if ($user->hasRole(RolesEnum::superAdmin->name)) {
                 return true;
             }
 
-            if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::admin->name)) {
+            if ($user->id === $attachment->user->id) {
+                return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::admin->name)) {
                 if ($attachment->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
                     return false;
                 } else {
                     return true;
                 }
-            } else if ($user->id === $attachment->user->id) {
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
+                    return false;
+                }
+
                 return true;
             }
 
@@ -118,6 +166,18 @@ class AttachmentPolicy
                 return true;
             } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::admin->value)) {
                 if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::manager->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value])) {
+                    return false;
+                }
+
+                return true;
+            } else if ($user->id !== $attachment->user->id && $user->hasRole(RolesEnum::employee->value)) {
+                if ($attachment->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value, RolesEnum::manager->value, RolesEnum::employee->value])) {
                     return false;
                 }
 

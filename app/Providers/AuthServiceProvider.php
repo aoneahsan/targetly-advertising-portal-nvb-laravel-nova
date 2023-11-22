@@ -15,21 +15,18 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         'App\Models\Default\User' => 'App\Policies\UserPolicy',
-        'App\Models\Default\Workspace' => 'App\Policies\WorkspacePolicy',
+        'App\Models\Default\Attachment' => 'App\Policies\AttachmentPolicy',
+        'App\Models\Default\Comment' => 'App\Policies\CommentPolicy',
+        'App\Models\Default\History' => 'App\Policies\HistoryPolicy',
+        'App\Models\Default\Reply' => 'App\Policies\ReplyPolicy',
+        'App\Models\Default\Task' => 'App\Policies\TaskPolicy',
 
-        'App\Models\ZLink\ShortLinks\CustomDomain' => 'App\Policies\CustomDomainPolicy',
-        'App\Models\ZLink\ShortLinks\EmbededWidget' => 'App\Policies\EmbededWidgetPolicy',
-        'App\Models\ZLink\ShortLinks\ShortLink' => 'App\Policies\ShortLinkPolicy',
-
-        'App\Models\ZLink\LinkInBios\LinkInBio' => 'App\Policies\LinkInBioPolicy',
-        'App\Models\ZLink\LinkInBios\LibBlock' => 'App\Policies\LibBlockPolicy',
-        'App\Models\ZLink\LinkInBios\LibPredefinedData' => 'App\Policies\LibPreDefinedDataPolicy',
-
-        'App\Models\ZLink\Analytics\Pixel' => 'App\Policies\PixelPolicy',
-        'App\Models\ZLink\Analytics\UtmTag' => 'App\Policies\UtmTagPolicy',
-
-        'App\Models\ZLink\Common\ApiKey' => 'App\Policies\ApiKeyPolicy',
-        'App\Models\ZLink\Common\Folder' => 'App\Policies\FolderPolicy',
+        // ZTech
+        'App\Models\ZTech\Batch' => 'App\Policies\ZTech\BatchPolicy',
+        'App\Models\ZTech\Installment' => 'App\Policies\ZTech\InstallmentPolicy',
+        'App\Models\ZTech\Notice' => 'App\Policies\ZTech\NoticePolicy',
+        'App\Models\ZTech\Receipt' => 'App\Policies\ZTech\ReceiptPolicy',
+        'App\Models\ZTech\Recovery' => 'App\Policies\ZTech\RecoveryPolicy',
     ];
 
     /**

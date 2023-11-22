@@ -10,6 +10,7 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+
     public function viewAny(User $user)
     {
         return $user->hasPermissionTo(PermissionsEnum::viewAny_user->name);

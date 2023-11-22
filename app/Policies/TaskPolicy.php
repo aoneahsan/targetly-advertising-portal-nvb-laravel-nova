@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Default\User;
 use App\Zaions\Enums\PermissionsEnum;
+use App\Zaions\Enums\RolesEnum;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TaskPolicy
@@ -15,9 +16,25 @@ class TaskPolicy
         return $user->hasPermissionTo(PermissionsEnum::viewAny_task->name);
     }
 
-    public function view(User $user)
+    public function view(User $user, $task)
     {
-        return $user->hasPermissionTo(PermissionsEnum::view_task->name);
+        if ($user->hasPermissionTo(PermissionsEnum::view_task->name)) {
+            if ($user->hasRole(RolesEnum::superAdmin->value)) {
+                return true;
+            }
+
+            if ($user->id === $task->user->id) {
+                return true;
+            } else if ($user->id !== $task->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($task->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function create(User $user)
@@ -25,24 +42,90 @@ class TaskPolicy
         return $user->hasPermissionTo(PermissionsEnum::create_task->name);
     }
 
-    public function update(User $user)
+    public function update(User $user, $task)
     {
-        return $user->hasPermissionTo(PermissionsEnum::update_task->name);
+        if ($user->hasPermissionTo(PermissionsEnum::update_task->name)) {
+            if ($user->hasRole(RolesEnum::superAdmin->value)) {
+                return true;
+            }
+
+            if ($user->id === $task->user->id) {
+                return true;
+            } else if ($user->id !== $task->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($task->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function replicate(User $user)
+    public function replicate(User $user, $task)
     {
-        return $user->hasPermissionTo(PermissionsEnum::replicate_task->name);
+        if ($user->hasPermissionTo(PermissionsEnum::replicate_task->name)) {
+            if ($user->hasRole(RolesEnum::superAdmin->value)) {
+                return true;
+            }
+
+            if ($user->id === $task->user->id) {
+                return true;
+            } else if ($user->id !== $task->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($task->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function delete(User $user)
+    public function delete(User $user, $task)
     {
-        return $user->hasPermissionTo(PermissionsEnum::delete_task->name);
+        if($user->hasPermissionTo(PermissionsEnum::delete_task->name)){
+
+            if ($user->hasRole(RolesEnum::superAdmin->name)) {
+                return true;
+            }
+
+            if ($user->id !== $task->user->id && $user->hasRole(RolesEnum::admin->name)) {
+                if ($task->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else if ($user->id === $task->user->id) {
+                return true;
+            }
+
+            return false;
+        }
+        return false;
     }
 
-    public function restore(User $user)
+    public function restore(User $user, $task)
     {
-        return $user->hasPermissionTo(PermissionsEnum::restore_task->name);
+        if ($user->hasPermissionTo(PermissionsEnum::restore_task->name)) {
+            if ($user->hasRole(RolesEnum::superAdmin->value)) {
+                return true;
+            }
+
+            if ($user->id === $task->user->id) {
+                return true;
+            } else if ($user->id !== $task->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($task->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function forceDelete(User $user)

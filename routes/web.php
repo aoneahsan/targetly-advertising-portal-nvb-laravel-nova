@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Zaions\TestingController;
 use App\Models\ZTech\Batch;
+use App\Zaions\Enums\PermissionsEnum;
 use App\Zaions\Enums\RolesEnum;
+use App\Zaions\Helpers\ZHelpers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
@@ -41,8 +43,9 @@ Route::get('/z-testing', function () {
 
 
     // on 21-11-23 testing what data i get from plunk
-    $batches = Batch::plunk('title', 'id')->get();
-    dd($batches);
+    // $batches = Batch::plunk('title', 'id')->get();
+    // dd($batches);
+
 });
 
 Route::redirect('/', config('nova.path'));

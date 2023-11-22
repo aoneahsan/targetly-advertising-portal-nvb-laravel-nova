@@ -64,7 +64,7 @@ Route::middleware(['api'])->name('zlink.')->prefix('zlink/v1')->group(function (
 
         // User Account Related Routes
         Route::controller(UserController::class)->group(function () {
-            Route::get('/list-users', 'listUsers');
+            Route::get('/list-users', 'listUsers')->can('viewAny');
             Route::get('/user', 'index');
             Route::get('/user/role/permissions', 'getUserPermissions');
             Route::post('/user', 'updateAccountInfo');

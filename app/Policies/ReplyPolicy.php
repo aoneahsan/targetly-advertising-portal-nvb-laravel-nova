@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Default\User;
 use App\Zaions\Enums\PermissionsEnum;
+use App\Zaions\Enums\RolesEnum;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ReplyPolicy
@@ -15,9 +16,25 @@ class ReplyPolicy
         return $user->hasPermissionTo(PermissionsEnum::viewAny_reply->name);
     }
 
-    public function view(User $user)
+    public function view(User $user, $reply)
     {
-        return $user->hasPermissionTo(PermissionsEnum::view_reply->name);
+        if ($user->hasPermissionTo(PermissionsEnum::view_reply->name)) {
+            if ($user->hasRole(RolesEnum::superAdmin->value)) {
+                return true;
+            }
+
+            if ($user->id === $reply->user->id) {
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function create(User $user)
@@ -25,24 +42,90 @@ class ReplyPolicy
         return $user->hasPermissionTo(PermissionsEnum::create_reply->name);
     }
 
-    public function update(User $user)
+    public function update(User $user, $reply)
     {
-        return $user->hasPermissionTo(PermissionsEnum::update_reply->name);
+        if ($user->hasPermissionTo(PermissionsEnum::update_reply->name)) {
+            if ($user->hasRole(RolesEnum::superAdmin->value)) {
+                return true;
+            }
+
+            if ($user->id === $reply->user->id) {
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function replicate(User $user)
+    public function replicate(User $user, $reply)
     {
-        return $user->hasPermissionTo(PermissionsEnum::replicate_reply->name);
+        if ($user->hasPermissionTo(PermissionsEnum::replicate_reply->name)) {
+            if ($user->hasRole(RolesEnum::superAdmin->value)) {
+                return true;
+            }
+
+            if ($user->id === $reply->user->id) {
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function delete(User $user)
+    public function delete(User $user, $reply)
     {
-        return $user->hasPermissionTo(PermissionsEnum::delete_reply->name);
+        if($user->hasPermissionTo(PermissionsEnum::delete_reply->name)){
+
+            if ($user->hasRole(RolesEnum::superAdmin->name)) {
+                return true;
+            }
+
+            if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::admin->name)) {
+                if ($reply->user->hasRole([RolesEnum::admin->name, RolesEnum::superAdmin->name])) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else if ($user->id === $reply->user->id) {
+                return true;
+            }
+
+            return false;
+        }
+        return false;
     }
 
-    public function restore(User $user)
+    public function restore(User $user, $reply)
     {
-        return $user->hasPermissionTo(PermissionsEnum::restore_reply->name);
+        if ($user->hasPermissionTo(PermissionsEnum::restore_reply->name)) {
+            if ($user->hasRole(RolesEnum::superAdmin->value)) {
+                return true;
+            }
+
+            if ($user->id === $reply->user->id) {
+                return true;
+            } else if ($user->id !== $reply->user->id && $user->hasRole(RolesEnum::admin->value)) {
+                if ($reply->user->hasRole([RolesEnum::superAdmin->value, RolesEnum::admin->value])) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function forceDelete(User $user)

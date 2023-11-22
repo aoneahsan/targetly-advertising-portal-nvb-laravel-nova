@@ -5,14 +5,13 @@ namespace App\Zaions\Helpers;
 use App\Models\Default\User;
 use App\Models\ZTech\Batch;
 use App\Zaions\Enums\NamazEnum;
+use App\Zaions\Enums\PermissionsEnum;
 use App\Zaions\Enums\RolesEnum;
 use Carbon\Carbon;
-use Database\Factories\ZTech\BatchFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Mockery\Undefined;
+use Spatie\Permission\Models\Permission;
 
 class ZHelpers
 {
@@ -421,5 +420,25 @@ class ZHelpers
       $items = Batch::limit(2)->pluck('id');
       return $items;
     }
+  }
+
+  public static function createPermissions()
+  {
+    $enumsArr = PermissionsEnum::cases();
+    $values = array_column($enumsArr, 'value');
+
+    $AllPermissions = [];
+
+    foreach ($values as $value) {
+      $permissionExists = Permission::where('name', $value)->first();
+
+      if (!$permissionExists) {
+        $AllPermissions[] = Permission::create(['name' => $value]);
+      } else {
+        $AllPermissions[] = $permissionExists;
+      }
+    }
+
+    return $AllPermissions;
   }
 }
